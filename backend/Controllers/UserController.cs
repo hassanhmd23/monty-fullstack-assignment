@@ -28,7 +28,7 @@ namespace backend.Controllers
         }
 
         [HttpGet("{userId}")]
-        public async Task<ActionResult<User>> GetById(int userId)
+        public async Task<ActionResult<User>> GetById([FromRoute] int userId)
         {
             var user = await _userRepository.GetUserByIdAsync(userId);
             if (user == null)
@@ -39,7 +39,7 @@ namespace backend.Controllers
         }
 
         [HttpGet("email/{email}")]
-        public async Task<ActionResult<User>> GetUserByEmail(string email)
+        public async Task<ActionResult<User>> GetUserByEmail([FromRoute] string email)
         {
             var user = await _userRepository.GetUserByEmailAsync(email);
             if (user == null)
@@ -51,20 +51,23 @@ namespace backend.Controllers
 
 
         [HttpPost]
-        public async Task<ActionResult<User>> Create(User user)
+        public async Task<ActionResult<User>> Create([FromBody] CreateUserRequestDto createRequestDto)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var newUser = await _userRepository.CreateUserAsync(user);
-            return CreatedAtAction(nameof(GetById), new { userId = newUser.Id }, newUser.ToUserDto());
+            var user = createRequestDto.ToUserFromCreateDto();
+
+            await _userRepository.CreateUserAsync(user);
+
+            return CreatedAtAction(nameof(GetById), new { userId = user.Id }, user.ToUserDto());
 
         }
 
         [HttpPut("{userId}")]
-        public async Task<ActionResult> Update(int userId, UpdateUserRequestDto updateRequestDto)
+        public async Task<ActionResult> Update([FromRoute] int userId, [FromBody] UpdateUserRequestDto updateRequestDto)
         {
             if (!ModelState.IsValid)
             {
@@ -72,8 +75,9 @@ namespace backend.Controllers
             }
 
             var user = await _userRepository.UpdateUserAsync(userId, updateRequestDto);
-            
-            if (user == null) {
+
+            if (user == null)
+            {
                 return NotFound();
             }
 
@@ -81,7 +85,7 @@ namespace backend.Controllers
         }
 
         [HttpDelete("{userId}")]
-        public async Task<ActionResult> Delete(int userId)
+        public async Task<ActionResult> Delete([FromRoute] int userId)
         {
             if (!ModelState.IsValid)
             {
