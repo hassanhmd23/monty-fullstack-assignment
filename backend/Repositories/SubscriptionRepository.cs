@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using backend.Data;
 using backend.Dtos.Subscription;
+using backend.Helpers;
 using backend.Interfaces;
 using backend.Models;
 using Microsoft.EntityFrameworkCore;
@@ -40,9 +41,15 @@ namespace backend.Repositories
             return subscription;
         }
 
-        public async Task<List<Subscription>> GetAllSubscriptionsAsync()
+        public async Task<List<Subscription>> GetAllSubscriptionsAsync(SubscriptionQueryObject query)
         {
-            return await _context.Subscriptions.ToListAsync();
+            var subscriptions = _context.Subscriptions.AsQueryable();
+
+            if (query.UserId.HasValue) {
+                subscriptions = subscriptions.Where(s => s.UserId == query.UserId);
+            }
+
+            return await subscriptions.ToListAsync();
         }
 
         public async Task<Subscription?> GetSubscriptionByIdAsync(int id)

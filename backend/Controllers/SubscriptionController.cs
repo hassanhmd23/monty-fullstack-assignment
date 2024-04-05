@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using backend.Dtos.Subscription;
+using backend.Helpers;
 using backend.Interfaces;
 using backend.Mappers;
 using backend.Models;
@@ -21,14 +22,14 @@ namespace backend.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<Subscription>>> GetAll()
+        public async Task<ActionResult<List<SubscriptionDto>>> GetAll([FromQuery] SubscriptionQueryObject query)
         {
-            var subscriptions = await _subscriptionRepository.GetAllSubscriptionsAsync();
+            var subscriptions = await _subscriptionRepository.GetAllSubscriptionsAsync(query);
             return Ok(subscriptions.Select(Subscription => Subscription.ToSubscriptionDto()));
         }
 
         [HttpGet("{subscriptionId:int}")]
-        public async Task<ActionResult<Subscription>> GetById([FromRoute] int subscriptionId)
+        public async Task<ActionResult<SubscriptionDto>> GetById([FromRoute] int subscriptionId)
         {
             var subscription = await _subscriptionRepository.GetSubscriptionByIdAsync(subscriptionId);
             if (subscription == null)
@@ -39,7 +40,7 @@ namespace backend.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Subscription>> Create([FromBody] CreateSubscriptionRequestDto createRequestDto)
+        public async Task<ActionResult<SubscriptionDto>> Create([FromBody] CreateSubscriptionRequestDto createRequestDto)
         {
             if (!ModelState.IsValid)
             {
@@ -57,7 +58,7 @@ namespace backend.Controllers
         }
 
         [HttpPut("{subscriptionId:int}")]
-        public async Task<ActionResult> Update([FromRoute] int subscriptionId, [FromBody] UpdateSubscriptionRequestDto updateRequestDto)
+        public async Task<ActionResult<SubscriptionDto>> Update([FromRoute] int subscriptionId, [FromBody] UpdateSubscriptionRequestDto updateRequestDto)
         {
             if (!ModelState.IsValid)
             {
@@ -75,7 +76,7 @@ namespace backend.Controllers
         }
 
         [HttpDelete("{subscriptionId:int}")]
-        public async Task<ActionResult> Delete([FromRoute] int subscriptionId)
+        public async Task<IActionResult> Delete([FromRoute] int subscriptionId)
         {
             if (!ModelState.IsValid)
             {

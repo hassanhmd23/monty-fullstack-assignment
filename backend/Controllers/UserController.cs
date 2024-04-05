@@ -21,14 +21,14 @@ namespace backend.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<User>>> GetAll()
+        public async Task<ActionResult<List<UserDto>>> GetAll()
         {
             var users = await _userRepository.GetAllUsersAsync();
             return Ok(users.Select(user => user.ToUserDto()));
         }
 
         [HttpGet("{userId:int}")]
-        public async Task<ActionResult<User>> GetById([FromRoute] int userId)
+        public async Task<ActionResult<UserDto>> GetById([FromRoute] int userId)
         {
             var user = await _userRepository.GetUserByIdAsync(userId);
             if (user == null)
@@ -39,7 +39,7 @@ namespace backend.Controllers
         }
 
         [HttpGet("email/{email}")]
-        public async Task<ActionResult<User>> GetUserByEmail([FromRoute] string email)
+        public async Task<ActionResult<UserDto>> GetUserByEmail([FromRoute] string email)
         {
             var user = await _userRepository.GetUserByEmailAsync(email);
             if (user == null)
@@ -51,7 +51,7 @@ namespace backend.Controllers
 
 
         [HttpPost]
-        public async Task<ActionResult<User>> Create([FromBody] CreateUserRequestDto createRequestDto)
+        public async Task<ActionResult<UserDto>> Create([FromBody] CreateUserRequestDto createRequestDto)
         {
             if (!ModelState.IsValid)
             {
@@ -67,7 +67,7 @@ namespace backend.Controllers
         }
 
         [HttpPut("{userId:int}")]
-        public async Task<ActionResult> Update([FromRoute] int userId, [FromBody] UpdateUserRequestDto updateRequestDto)
+        public async Task<ActionResult<UserDto>> Update([FromRoute] int userId, [FromBody] UpdateUserRequestDto updateRequestDto)
         {
             if (!ModelState.IsValid)
             {
@@ -85,7 +85,7 @@ namespace backend.Controllers
         }
 
         [HttpDelete("{userId:int}")]
-        public async Task<ActionResult> Delete([FromRoute] int userId)
+        public async Task<IActionResult> Delete([FromRoute] int userId)
         {
             if (!ModelState.IsValid)
             {

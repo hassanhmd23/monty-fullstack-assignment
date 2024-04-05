@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using backend.Interfaces;
 
-namespace backend.Helpers
+namespace backend.Validators
 {
     public class UserIdExistsAttribute : ValidationAttribute
     {
@@ -24,7 +24,7 @@ namespace backend.Helpers
             var userRepository = (IUserRepository)validationContext
                 .GetService(typeof(IUserRepository));
 
-            if (userRepository.CheckUserExist(userId))
+            if (!userRepository.CheckUserExist(userId))
             {
                 return new ValidationResult("The specified UserId does not exist.");
             }

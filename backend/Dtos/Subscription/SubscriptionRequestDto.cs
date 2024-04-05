@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using backend.Enums;
-using backend.Helpers;
+using backend.Validators;
 
 namespace backend.Dtos.Subscription
 {

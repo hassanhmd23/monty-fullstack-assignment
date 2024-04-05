@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace backend.Helpers
+namespace backend.Validators
 {
     public class EnumValidationAttribute : ValidationAttribute
     {

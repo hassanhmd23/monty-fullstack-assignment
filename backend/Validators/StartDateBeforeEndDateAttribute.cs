@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using backend.Dtos.Subscription;
 
-namespace backend.Helpers
+namespace backend.Validators
 {
     public class StartDateBeforeEndDateAttribute : ValidationAttribute
     {
