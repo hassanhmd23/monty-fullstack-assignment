@@ -17,7 +17,9 @@ namespace backend.Mappers
                 UserId = subscription.UserId,
                 SubscriptionType = subscription.SubscriptionType,
                 StartDate = subscription.StartDate,
-                EndDate = subscription.EndDate
+                EndDate = subscription.EndDate,
+                CreatedAt = subscription.CreatedAt,
+                UpdatedAt = subscription.UpdatedAt
             };
         }
 

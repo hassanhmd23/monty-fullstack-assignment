@@ -17,7 +17,9 @@ namespace backend.Mappers
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 Email = user.Email,
-                Subscriptions = user.Subscriptions.Select(s => s.ToSubscriptionDto()).ToList()
+                Subscriptions = user.Subscriptions.Select(s => s.ToSubscriptionDto()).ToList(),
+                CreatedAt = user.CreatedAt,
+                UpdatedAt = user.UpdatedAt
             };
         }
 

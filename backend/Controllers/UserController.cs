@@ -38,7 +38,7 @@ namespace backend.Controllers
             return Ok(user.ToUserDto());
         }
 
-        [HttpGet("email/{email:string}")]
+        [HttpGet("email/{email}")]
         public async Task<ActionResult<User>> GetUserByEmail([FromRoute] string email)
         {
             var user = await _userRepository.GetUserByEmailAsync(email);

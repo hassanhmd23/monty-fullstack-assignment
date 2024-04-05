@@ -62,6 +62,7 @@ namespace backend.Repositories
             subscription.SubscriptionType = updateSubscriptionRequestDto.SubscriptionType;
             subscription.StartDate = DateTime.SpecifyKind(updateSubscriptionRequestDto.StartDate, DateTimeKind.Utc);
             subscription.EndDate = DateTime.SpecifyKind(updateSubscriptionRequestDto.EndDate, DateTimeKind.Utc);
+            subscription.UpdatedAt = DateTime.UtcNow;
 
             await _context.SaveChangesAsync();
             return subscription;

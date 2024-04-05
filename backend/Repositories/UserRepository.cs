@@ -61,6 +61,7 @@ namespace backend.Repositories
             user.LastName = updateUserRequestDto.LastName;
             user.Email = updateUserRequestDto.Email;
             user.Password = updateUserRequestDto.Password;
+            user.UpdatedAt = DateTime.UtcNow;
 
             await _context.SaveChangesAsync();
             return user;
