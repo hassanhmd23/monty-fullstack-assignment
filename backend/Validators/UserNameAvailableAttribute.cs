@@ -7,7 +7,7 @@ using backend.Interfaces;
 
 namespace backend.Validators
 {
-    public class UserIdExistsAttribute : ValidationAttribute
+    public class UserNameAvailableAttribute : ValidationAttribute
     {
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
@@ -16,17 +16,17 @@ namespace backend.Validators
                 return ValidationResult.Success;
             }
 
-            if (value is not string userId)
+            if (value is not string userName)
             {
-                return new ValidationResult("Invalid data type for UserId.");
+                return new ValidationResult("Invalid data type for UserName.");
             }
 
             var userRepository = (IUserRepository)validationContext
                 .GetService(typeof(IUserRepository));
 
-            if (!userRepository.CheckUserExist(userId))
+            if (userRepository.CheckUserNameExist(userName))
             {
-                return new ValidationResult("The specified UserId does not exist.");
+                return new ValidationResult("The specified UserName already taken.");
             }
 
             return ValidationResult.Success;

@@ -45,7 +45,7 @@ namespace backend.Repositories
         {
             var subscriptions = _context.Subscriptions.AsQueryable();
 
-            if (query.UserId.HasValue) {
+            if (!string.IsNullOrWhiteSpace(query.UserId)) {
                 subscriptions = subscriptions.Where(s => s.UserId == query.UserId);
             }
 

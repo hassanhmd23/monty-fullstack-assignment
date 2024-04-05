@@ -12,6 +12,6 @@ namespace backend.Dtos.Subscription
     {
         [Required]
         [UserIdExists(ErrorMessage = "The specified UserId does not exist.")]
-        public int UserId { get; set; }
+        public string UserId { get; set; }
     }
 }

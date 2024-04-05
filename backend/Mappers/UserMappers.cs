@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using backend.Dtos.User;
 using backend.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace backend.Mappers
 {
@@ -14,6 +15,7 @@ namespace backend.Mappers
             return new UserDto
             {
                 Id = user.Id,
+                UserName = user.UserName,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 Email = user.Email,
@@ -27,10 +29,10 @@ namespace backend.Mappers
         {
             return new User
             {
+                UserName = createUserDto.UserName,
                 FirstName = createUserDto.FirstName,
                 LastName = createUserDto.LastName,
                 Email = createUserDto.Email,
-                Password = createUserDto.Password
             };
         }
     }
