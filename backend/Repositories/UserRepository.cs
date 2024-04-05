@@ -45,10 +45,6 @@ namespace backend.Repositories
             return await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
         }
 
-        public User? GetUserById(int id)
-        {
-            return _context.Users.Include(s => s.Subscriptions).FirstOrDefault(u => u.Id == id);
-        }
 
         public async Task<User?> GetUserByIdAsync(int id)
         {
@@ -68,6 +64,10 @@ namespace backend.Repositories
 
             await _context.SaveChangesAsync();
             return user;
+        }
+        public bool CheckUserExist(int id)
+        {
+            return _context.Users.Any(u => u.Id == id);
         }
     }
 }

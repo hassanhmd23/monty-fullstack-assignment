@@ -24,9 +24,7 @@ namespace backend.Helpers
             var userRepository = (IUserRepository)validationContext
                 .GetService(typeof(IUserRepository));
 
-            var user = userRepository.GetUserById(userId);
-
-            if (user == null)
+            if (userRepository.CheckUserExist(userId))
             {
                 return new ValidationResult("The specified UserId does not exist.");
             }
