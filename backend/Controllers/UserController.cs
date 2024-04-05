@@ -27,7 +27,7 @@ namespace backend.Controllers
             return Ok(users.Select(user => user.ToUserDto()));
         }
 
-        [HttpGet("{userId}")]
+        [HttpGet("{userId:int}")]
         public async Task<ActionResult<User>> GetById([FromRoute] int userId)
         {
             var user = await _userRepository.GetUserByIdAsync(userId);
@@ -38,7 +38,7 @@ namespace backend.Controllers
             return Ok(user.ToUserDto());
         }
 
-        [HttpGet("email/{email}")]
+        [HttpGet("email/{email:string}")]
         public async Task<ActionResult<User>> GetUserByEmail([FromRoute] string email)
         {
             var user = await _userRepository.GetUserByEmailAsync(email);
@@ -66,7 +66,7 @@ namespace backend.Controllers
 
         }
 
-        [HttpPut("{userId}")]
+        [HttpPut("{userId:int}")]
         public async Task<ActionResult> Update([FromRoute] int userId, [FromBody] UpdateUserRequestDto updateRequestDto)
         {
             if (!ModelState.IsValid)
@@ -84,7 +84,7 @@ namespace backend.Controllers
             return Ok(user.ToUserDto());
         }
 
-        [HttpDelete("{userId}")]
+        [HttpDelete("{userId:int}")]
         public async Task<ActionResult> Delete([FromRoute] int userId)
         {
             if (!ModelState.IsValid)

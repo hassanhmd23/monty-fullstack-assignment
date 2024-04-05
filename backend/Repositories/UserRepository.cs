@@ -26,7 +26,7 @@ namespace backend.Repositories
 
         public async Task<User?> DeleteUserAsync(int id)
         {
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == id);
+            var user = await _context.Users.FindAsync(id);
 
             if (user == null) return null;
 
@@ -37,7 +37,7 @@ namespace backend.Repositories
 
         public async Task<List<User>> GetAllUsersAsync()
         {
-            return await _context.Users.ToListAsync();
+            return await _context.Users.Include(s => s.Subscriptions).ToListAsync();
         }
 
         public async Task<User?> GetUserByEmailAsync(string email)
@@ -45,14 +45,19 @@ namespace backend.Repositories
             return await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
         }
 
+        public User? GetUserById(int id)
+        {
+            return _context.Users.Include(s => s.Subscriptions).FirstOrDefault(u => u.Id == id);
+        }
+
         public async Task<User?> GetUserByIdAsync(int id)
         {
-            return await _context.Users.FirstOrDefaultAsync(u => u.Id == id);
+            return await _context.Users.FindAsync(id);
         }
 
         public async Task<User?> UpdateUserAsync(int id, UpdateUserRequestDto updateUserRequestDto)
         {
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == id);
+            var user = await _context.Users.FindAsync(id);
 
             if (user == null) return null;
 

@@ -12,8 +12,8 @@ using backend.Data;
 namespace backend.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20240403231139_init")]
-    partial class init
+    [Migration("20240405092651_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -38,9 +38,8 @@ namespace backend.Migrations
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("SubscriptionType")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<int>("SubscriptionType")
+                        .HasColumnType("integer");
 
                     b.Property<int>("UserId")
                         .HasColumnType("integer");
@@ -84,12 +83,17 @@ namespace backend.Migrations
             modelBuilder.Entity("backend.Models.Subscription", b =>
                 {
                     b.HasOne("backend.Models.User", "User")
-                        .WithMany()
+                        .WithMany("Subscriptions")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("backend.Models.User", b =>
+                {
+                    b.Navigation("Subscriptions");
                 });
 #pragma warning restore 612, 618
         }

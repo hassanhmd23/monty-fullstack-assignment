@@ -7,6 +7,7 @@ namespace backend.Interfaces
     {
         Task<List<User>> GetAllUsersAsync();
         Task<User?> GetUserByIdAsync(int id);
+        User? GetUserById(int id);
         Task<User?> GetUserByEmailAsync(string email);
         Task<User> CreateUserAsync(User user);
         Task<User?> UpdateUserAsync(int id, UpdateUserRequestDto updateUserRequestDto);
