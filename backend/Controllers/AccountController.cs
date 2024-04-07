@@ -34,14 +34,14 @@ namespace backend.Controllers
 
             if (user == null)
             {
-                return Unauthorized("Invalid username!");
+                return Unauthorized(new { message = "Username not found" });
             }
 
             var result = await _signInManager.CheckPasswordSignInAsync(user, loginRequestDto.Password, false);
 
             if (!result.Succeeded)
             {
-                return Unauthorized("Username not found and/or password incorrect");
+                return Unauthorized(new { message = "Username not found and/or password incorrect" });
             }
 
             return Ok(

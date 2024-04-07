@@ -51,8 +51,6 @@ namespace backend.Controllers
 
             var subscription = createRequestDto.ToSubscriptionFromCreateDto();
 
-            Console.WriteLine(subscription.StartDate);
-
             await _subscriptionRepository.CreateSubscriptionAsync(subscription);
 
             return CreatedAtAction(nameof(GetById), new { subscriptionId = subscription.Id }, subscription.ToSubscriptionDto());
