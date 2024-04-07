@@ -89,6 +89,16 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("CorsPolicy", policy =>
+    {
+        policy.WithOrigins(builder.Configuration["AllowedOrigins"].Split(","))
+       .AllowAnyMethod()
+       .AllowAnyHeader();
+    });
+});
+
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<ISubscriptionRepository, SubscriptionRepository>();
 builder.Services.AddScoped<ITokenService, TokenService>();
@@ -118,6 +128,7 @@ using (var scope = app.Services.CreateScope())
 app.UseSwagger();
 app.UseSwaggerUI();
 
+app.UseCors("CorsPolicy");
 app.UseAuthentication();
 
 app.UseAuthorization();
