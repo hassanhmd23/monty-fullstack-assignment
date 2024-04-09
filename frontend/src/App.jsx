@@ -1,11 +1,14 @@
 import "./App.css";
 import "react-toastify/dist/ReactToastify.min.css";
-import LoginForm from "./components/Auth/LoginForm";
 import PrivateRoute from "./components/Auth/PrivateRoute";
 import { ToastContainer } from "react-toastify";
 import store from "./redux/store";
 import { Provider } from "react-redux";
 import { Routes, Route, BrowserRouter as Router } from "react-router-dom";
+import LoginPage from "./pages/LoginPage";
+import DashboardPage from "./pages/DashboardPage";
+import UsersPage from "./pages/UsersPage";
+import UserPage from "./components/Users/UserPage";
 
 function App() {
   return (
@@ -14,9 +17,11 @@ function App() {
         <Router>
           <Routes>
             <Route element={<PrivateRoute />}>
-              <Route path="/" element={<LoginForm />} />
+              <Route path="/" element={<DashboardPage />} />
+              <Route path="/users" element={<UsersPage />} />
+              <Route path="/users/:id" element={<UserPage />} />
             </Route>
-            <Route path="/login" element={<LoginForm />} />
+            <Route path="/login" element={<LoginPage />} />
           </Routes>
         </Router>
         <ToastContainer

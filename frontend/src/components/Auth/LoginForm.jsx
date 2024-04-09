@@ -1,3 +1,5 @@
+import { useNavigate } from "react-router-dom";
+
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { useDispatch } from "react-redux";
@@ -23,10 +25,12 @@ const validationSchema = yup.object({
 const defaultTheme = createTheme();
 
 const LoginForm = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const handleSubmit = async (values) => {
     dispatch(userLogin(values))
+    navigate("/");
   };
 
   const formik = useFormik({
