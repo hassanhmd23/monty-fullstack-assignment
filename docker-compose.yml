@@ -9,14 +9,14 @@ services:
      - "app_db"
     container_name: backend-app-container
     ports:
-      - "5246:80"
+      - "5246:3000"
     build:
       context: ./backend
       dockerfile: Dockerfile
     environment:
       - ConnectionStrings__DefaultConnection=User ID =postgres;Password=postgres;Server=app_db;Port=5432;Database=Assignment; Integrated Security=true;Pooling=true;
-      - ASPNETCORE_URLS=http://+:80
-      - AllowedOrigins=http://localhost:5173
+      - ASPNETCORE_URLS=http://+:3000
+      - AllowedOrigins=http://localhost:5173,http://localhost,http://localhost:8080
     networks:
       - dev
   app_db:
@@ -31,6 +31,16 @@ services:
     restart: always
     volumes:
       - app_data:/var/lib/postgresql/data
+    networks:
+      - dev
+  frontend-app:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    image: docker.io/library/frontend-app
+    container_name: frontend-app-container
+    ports:
+      - "8080:80"
     networks:
       - dev
 volumes:
