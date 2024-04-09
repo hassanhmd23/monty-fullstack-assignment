@@ -29,7 +29,7 @@ const LoginForm = () => {
   const dispatch = useDispatch();
 
   const handleSubmit = async (values) => {
-    dispatch(userLogin(values))
+    dispatch(userLogin(values));
     navigate("/");
   };
 
@@ -44,53 +44,72 @@ const LoginForm = () => {
 
   return (
     <ThemeProvider theme={defaultTheme}>
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <Box
-          sx={{
-            marginTop: 8,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Sign in
-          </Typography>
-          <form onSubmit={formik.handleSubmit}>
-            <TextField
-              margin="normal"
-              fullWidth
-              id="username"
-              name="username"
-              label="Username"
-              value={formik.values.username}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              error={formik.touched.username && Boolean(formik.errors.username)}
-              helperText={formik.touched.username && formik.errors.username}
-            />
-            <TextField
-              margin="normal"
-              fullWidth
-              id="password"
-              name="password"
-              label="Password"
-              type="password"
-              value={formik.values.password}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              error={formik.touched.password && Boolean(formik.errors.password)}
-              helperText={formik.touched.password && formik.errors.password}
-            />
-            <Button color="primary" variant="contained" fullWidth type="submit">
-              Submit
-            </Button>
-          </form>
-        </Box>
+      <Container
+        sx={{
+          width: "100vw",
+          height: "100vh",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <Container component="main" maxWidth="xs">
+          <CssBaseline />
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+              <LockOutlinedIcon />
+            </Avatar>
+            <Typography component="h1" variant="h5">
+              Sign in
+            </Typography>
+            <form onSubmit={formik.handleSubmit}>
+              <TextField
+                margin="normal"
+                fullWidth
+                id="username"
+                name="username"
+                label="Username"
+                value={formik.values.username}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                error={
+                  formik.touched.username && Boolean(formik.errors.username)
+                }
+                helperText={formik.touched.username && formik.errors.username}
+              />
+              <TextField
+                margin="normal"
+                fullWidth
+                id="password"
+                name="password"
+                label="Password"
+                type="password"
+                value={formik.values.password}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                error={
+                  formik.touched.password && Boolean(formik.errors.password)
+                }
+                helperText={formik.touched.password && formik.errors.password}
+              />
+              <Button
+                color="primary"
+                variant="contained"
+                fullWidth
+                type="submit"
+              >
+                Submit
+              </Button>
+            </form>
+          </Box>
+        </Container>
       </Container>
     </ThemeProvider>
   );
