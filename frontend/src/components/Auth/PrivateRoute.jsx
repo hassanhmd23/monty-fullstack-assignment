@@ -1,7 +1,9 @@
 import { useSelector } from "react-redux";
-import { NavLink, Outlet } from "react-router-dom";
+import { useNavigate, Outlet } from "react-router-dom";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import Layout from "../Layout/Layout";
 
@@ -9,16 +11,37 @@ const defaultTheme = createTheme();
 
 const PrivateRoute = () => {
   const { isAdmin } = useSelector((state) => state.auth);
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate("/login");
+  };
 
   if (!isAdmin) {
     return (
-      <div className="unauthorized">
-        <h1>Unauthorized :(</h1>
-        <span>
-          <NavLink to="/login">Login</NavLink> with admin privileges to gain
-          access
-        </span>
-      </div>
+      <Box
+        height="100vh"
+        width="100vw"
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
+        flexDirection="column"
+      >
+        <Typography component="h2" variant="h2">
+          Unauthorized :(
+        </Typography>
+        <Typography component="h4" variant="h4">
+          Login with admin privileges to gain access
+        </Typography>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={handleClick}
+          sx={{ height: "60px", fontSize: "24px", marginTop: "20px" }}
+        >
+          Login
+        </Button>
+      </Box>
     );
   }
 
