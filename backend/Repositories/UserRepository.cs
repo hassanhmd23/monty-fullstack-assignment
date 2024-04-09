@@ -52,8 +52,7 @@ namespace backend.Repositories
 
             if (user == null) return null;
 
-            _context.Users.Remove(user);
-            await _context.SaveChangesAsync();
+            await _userManager.DeleteAsync(user);
             return user;
         }
 
@@ -90,12 +89,15 @@ namespace backend.Repositories
             {
                 await _userManager.RemoveFromRoleAsync(user, currentRole);
                 await _userManager.AddToRoleAsync(user, updateUserRequestDto.Role);
+                user.Role = updateUserRequestDto.Role;
             }
 
             user.FirstName = updateUserRequestDto.FirstName;
             user.LastName = updateUserRequestDto.LastName;
             user.Email = updateUserRequestDto.Email;
             user.UserName = updateUserRequestDto.UserName;
+            user.Country = updateUserRequestDto.Country;
+            user.Gender = updateUserRequestDto.Gender;
             user.UpdatedAt = DateTime.UtcNow;
 
             await _context.SaveChangesAsync();

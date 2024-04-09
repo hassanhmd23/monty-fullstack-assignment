@@ -19,6 +19,9 @@ namespace backend.Mappers
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 Email = user.Email,
+                Country = user.Country,
+                Gender = user.Gender,
+                Role = user.Role,
                 Subscriptions = user.Subscriptions.Select(s => s.ToSubscriptionDto()).ToList(),
                 CreatedAt = user.CreatedAt,
                 UpdatedAt = user.UpdatedAt
@@ -33,6 +36,9 @@ namespace backend.Mappers
                 FirstName = createUserDto.FirstName,
                 LastName = createUserDto.LastName,
                 Email = createUserDto.Email,
+                Country = createUserDto.Country,
+                Gender = createUserDto.Gender,
+                Role = createUserDto.Role,
             };
         }
     }

@@ -27,7 +27,10 @@ namespace backend.Controllers
         public async Task<ActionResult<List<UserDto>>> GetAll()
         {
             var users = await _userRepository.GetAllUsersAsync();
-            return Ok(users.Select(user => user.ToUserDto()));
+            return Ok(new
+            {
+                users = users.Select(user => user.ToUserDto())
+            });
         }
 
         [HttpGet("{userId}")]
@@ -38,7 +41,7 @@ namespace backend.Controllers
             {
                 return NotFound();
             }
-            return Ok(user.ToUserDto());
+            return Ok(new { user = user.ToUserDto() });
         }
 
         [HttpGet("email/{email}")]
@@ -49,7 +52,7 @@ namespace backend.Controllers
             {
                 return NotFound();
             }
-            return Ok(user.ToUserDto());
+            return Ok(new { user = user.ToUserDto() });
         }
 
 
@@ -65,7 +68,7 @@ namespace backend.Controllers
 
             await _userRepository.CreateUserAsync(user, createRequestDto.Password, createRequestDto.Role);
 
-            return CreatedAtAction(nameof(GetById), new { userId = user.Id }, user.ToUserDto());
+            return CreatedAtAction(nameof(GetById), new { userId = user.Id }, new { user = user.ToUserDto() });
 
         }
 
@@ -94,7 +97,7 @@ namespace backend.Controllers
                 return NotFound();
             }
 
-            return Ok(user.ToUserDto());
+            return Ok(new { user = user.ToUserDto() });
         }
 
         [HttpDelete("{userId}")]

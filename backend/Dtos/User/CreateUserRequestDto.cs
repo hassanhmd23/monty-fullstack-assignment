@@ -31,5 +31,11 @@ namespace backend.Dtos.User
         [Required]
         [RegularExpression("^(Admin|User)$", ErrorMessage = "Role must be either Admin or User")]
         public string Role { get; set; } = string.Empty;
+        [Required]
+        [RegularExpression("^(Male|Female)$", ErrorMessage = "Gender must be either Male or Female")]
+        public string Gender { get; set; } = string.Empty;
+        [Required]
+        [MinLength(1, ErrorMessage = "Country must not be empty")]
+        public string Country { get; set; } = string.Empty;
     }
 }

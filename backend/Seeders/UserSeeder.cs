@@ -14,7 +14,7 @@ namespace backend.Seeders
             var user = await userManager.FindByNameAsync("admin");
             if (user == null)
             {
-                user = new User { UserName = "admin", Email = "admin@admin.com", FirstName = "Admin", LastName = "Admin" };
+                user = new User { UserName = "admin", Email = "admin@admin.com", FirstName = "Admin", LastName = "Admin", Role = "Admin", Gender = "Male", Country = "Lebanon" };
                 await userManager.CreateAsync(user, "Admin123@");
                 await userManager.AddToRoleAsync(user, "Admin");
             }

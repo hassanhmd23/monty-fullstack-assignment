@@ -14,7 +14,7 @@ namespace backend.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    [Authorize(Roles ="Admin")]
+    [Authorize(Roles = "Admin")]
     public class SubscriptionController : ControllerBase
     {
         private readonly ISubscriptionRepository _subscriptionRepository;
@@ -27,7 +27,7 @@ namespace backend.Controllers
         public async Task<ActionResult<List<SubscriptionDto>>> GetAll([FromQuery] SubscriptionQueryObject query)
         {
             var subscriptions = await _subscriptionRepository.GetAllSubscriptionsAsync(query);
-            return Ok(subscriptions.Select(Subscription => Subscription.ToSubscriptionDto()));
+            return Ok(new { subscriptions = subscriptions.Select(Subscription => Subscription.ToSubscriptionDto()) });
         }
 
         [HttpGet("{subscriptionId:int}")]
@@ -38,7 +38,7 @@ namespace backend.Controllers
             {
                 return NotFound();
             }
-            return Ok(subscription.ToSubscriptionDto());
+            return Ok(new { subscription = subscription.ToSubscriptionDto() });
         }
 
         [HttpPost]
@@ -53,7 +53,7 @@ namespace backend.Controllers
 
             await _subscriptionRepository.CreateSubscriptionAsync(subscription);
 
-            return CreatedAtAction(nameof(GetById), new { subscriptionId = subscription.Id }, subscription.ToSubscriptionDto());
+            return CreatedAtAction(nameof(GetById), new { subscriptionId = subscription.Id }, new { subscription = subscription.ToSubscriptionDto() });
 
         }
 
@@ -72,7 +72,7 @@ namespace backend.Controllers
                 return NotFound();
             }
 
-            return Ok(subscription.ToSubscriptionDto());
+            return Ok(new { subscription = subscription.ToSubscriptionDto() });
         }
 
         [HttpDelete("{subscriptionId:int}")]
